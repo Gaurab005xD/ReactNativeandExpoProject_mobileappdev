@@ -1,98 +1,138 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <Text style={styles.username}>G.Sa</Text>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <View style={styles.profileSection}>
+        <View style={styles.profilePic} />
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <View style={styles.stats}>
+          <View>
+            <Text style={styles.number}>0</Text>
+            <Text>Posts</Text>
+          </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+          <View>
+            <Text style={styles.number}>0</Text>
+            <Text>Followers</Text>
+          </View>
+
+          <View>
+            <Text style={styles.number}>0</Text>
+            <Text>Following</Text>
+          </View>
+        </View>
+      </View>
+
+      <Text style={styles.name}>Gaurab Sapkota</Text>
+
+      <TouchableOpacity style={styles.editButton}>
+        <Text style={styles.buttonLabel}>Edit Profile</Text>
+      </TouchableOpacity>
+
+      <View style={styles.gridContainer}>
+        <View style={styles.photoBox} />
+        <View style={styles.photoBox} />
+        <View style={styles.photoBox} />
+        <View style={styles.photoBox} />
+        <View style={styles.photoBox} />
+        <View style={styles.photoBox} />
+      </View>
+
+      <TouchableOpacity
+        style={styles.alertButton}
+        onPress={() => Alert.alert("Alert Button pressed")}
+      >
+        <Text style={styles.alertText}>Alert</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    padding: 20,
+    backgroundColor: "#ffffff",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+
+  username: {
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 40,
+    marginBottom: 25,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  profileSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  title: {
-    textAlign: 'center',
+
+  profilePic: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#d9d9d9",
   },
-  code: {
-    textTransform: 'uppercase',
+
+  stats: {
+    flexDirection: "row",
+    gap: 20,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  number: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  name: {
+    marginTop: 15,
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  editButton: {
+    marginTop: 15,
+    backgroundColor: "#ececec",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+
+  buttonLabel: {
+    fontWeight: "bold",
+  },
+
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginTop: 25,
+  },
+
+  photoBox: {
+    width: "31%",
+    height: 110,
+    backgroundColor: "#d9d9d9",
+    marginBottom: 10,
+  },
+
+  alertButton: {
+    backgroundColor: "#3897f0",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 15,
+    alignItems: "center",
+  },
+
+  alertText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
